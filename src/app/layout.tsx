@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-ink text-paper font-sans antialiased grain">
+      <body className="min-h-full flex flex-col bg-ink text-paper font-sans antialiased grain overflow-x-hidden">
         <div aria-hidden className="fixed inset-0 -z-10 bg-dot-grid opacity-40" />
         {children}
       </body>

@@ -16,6 +16,8 @@
   --paper-dim: #9a9da4;
   --accent: #f2b84b;
   --accent-dim: #b8873a;
+  --accent-2: #5fb2bd;
+  --accent-2-dim: #3f7d85;
   --hairline: rgba(255, 255, 255, 0.1);
   --hairline-strong: rgba(255, 255, 255, 0.18);
 
@@ -36,6 +38,8 @@
   --color-paper-dim: var(--paper-dim);
   --color-accent: var(--accent);
   --color-accent-dim: var(--accent-dim);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-dim: var(--accent-2-dim);
   --color-hairline: var(--hairline);
   --color-hairline-strong: var(--hairline-strong);
   --font-sans: var(--font-sans);

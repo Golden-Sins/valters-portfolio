@@ -6,7 +6,8 @@ import { SectionIntro } from "@/components/SectionIntro";
 
 export function Profile() {
   return (
-    <section id="profile" className="mx-auto max-w-6xl px-6 py-28">
+    <section id="profile" className="relative overflow-hidden mx-auto max-w-6xl px-6 py-28">
+      <div aria-hidden className="pointer-events-none absolute -top-24 -right-20 -z-10 h-[420px] w-[420px] rounded-full bg-accent-2/10 blur-[120px]" />
       <SectionIntro index="01" title="Profile" />
 
       <div className="grid md:grid-cols-[1.5fr_1fr] gap-12 items-start">
