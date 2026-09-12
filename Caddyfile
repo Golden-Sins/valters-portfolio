@@ -1,0 +1,7 @@
+valtersupenieks.com {
+    reverse_proxy portfolio:3000
+}
+
+www.valtersupenieks.com {
+    redir https://valtersupenieks.com{uri} permanent
+}

@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# valters-portfolio
 
-## Getting Started
+Personal portfolio / CV site for Valters Upenieks — Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Framer Motion.
 
-First, run the development server:
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All copy lives in [`src/lib/content.ts`](src/lib/content.ts) — update experience, projects, skills, etc. there rather than in the components.
 
-## Learn More
+## Images
 
-To learn more about Next.js, take a look at the following resources:
+Drop these three files into `public/images/` (referenced by the Hero, Profile, and Footer components):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `hero-cliff.jpg` — full-bleed hero background
+- `about-action.jpg` — inset accent photo in the Profile section
+- `avatar-candid.jpg` — small avatar in the Footer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Printable resume
 
-## Deploy on Vercel
+`/resume` renders the same content data as a print-optimized page (button triggers `window.print()` → Save as PDF).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm start
+```
+
+## Docker deploy
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+`docker-compose.yml` runs the app plus a Caddy reverse proxy that automatically issues HTTPS certificates for `valtersupenieks.com` / `www.valtersupenieks.com` (point both DNS records at the server first). `deploy.sh` wraps `git pull && docker compose build && docker compose up -d` for a one-line redeploy.
+
+## Push-to-deploy (GitHub Actions)
+
+`.github/workflows/deploy.yml` lints + builds on every push, then on `main` SSHes into the server and runs the same `git pull && docker compose build && docker compose up -d` sequence. It needs these repo secrets (Settings → Secrets and variables → Actions):
+
+| Secret | Value |
+|---|---|
+| `DEPLOY_HOST` | Server IP or hostname |
+| `DEPLOY_USER` | SSH user on the server |
+| `DEPLOY_SSH_KEY` | Private key for that user (add the matching public key to the server's `~/.ssh/authorized_keys`) |
+| `DEPLOY_PATH` | Absolute path to this repo's clone on the server, e.g. `/srv/valters-portfolio` |
+| `DEPLOY_PORT` | SSH port (optional, defaults to 22) |
+
+The server needs the repo cloned once by hand (`git clone` into `DEPLOY_PATH`) before the first automated deploy, since the workflow only runs `git pull`.
