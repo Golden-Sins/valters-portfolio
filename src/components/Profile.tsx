@@ -2,13 +2,12 @@ import Image from "next/image";
 import { Quote } from "lucide-react";
 import { profile, testimonial } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
+import { SectionIntro } from "@/components/SectionIntro";
 
 export function Profile() {
   return (
     <section id="profile" className="mx-auto max-w-6xl px-6 py-28">
-      <Reveal>
-        <p className="section-label mb-4">01 · Profile</p>
-      </Reveal>
+      <SectionIntro index="01" title="Profile" />
 
       <div className="grid md:grid-cols-[1.5fr_1fr] gap-12 items-start">
         <Reveal delay={0.05}>
@@ -38,7 +37,7 @@ export function Profile() {
       </div>
 
       <Reveal delay={0.15} className="mt-16">
-        <figure className="hairline border-l-2 border-l-accent bg-ink-raised/40 px-8 py-8 md:px-10 md:py-10">
+        <figure className="hairline border-l-2 border-l-accent bg-ink-raised/40 px-8 py-8 md:px-10 md:py-10 shadow-[0_0_50px_-15px_rgba(242,184,75,0.18)]">
           <Quote className="text-accent mb-4" size={22} />
           <blockquote className="text-[clamp(1.05rem,1.6vw,1.3rem)] leading-relaxed text-paper/90">
             &ldquo;{testimonial.quote}&rdquo;

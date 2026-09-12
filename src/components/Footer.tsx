@@ -3,14 +3,13 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { meta } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
+import { SectionIntro } from "@/components/SectionIntro";
 
 export function Footer() {
   return (
     <footer id="contact" className="border-t border-hairline">
       <div className="mx-auto max-w-6xl px-6 py-24">
-        <Reveal>
-          <p className="section-label mb-4">06 · Contact</p>
-        </Reveal>
+        <SectionIntro index="06" title="Contact" />
 
         <Reveal delay={0.05}>
           <div className="flex items-center gap-4 mb-10">

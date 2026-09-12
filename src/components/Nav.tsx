@@ -9,12 +9,33 @@ export function Nav() {
   const { scrollYProgress } = useScroll();
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.querySelector(link.href))
+      .filter((el): el is Element => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(`#${entry.target.id}`);
+          }
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -40,7 +61,9 @@ export function Nav() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="font-mono text-xs uppercase tracking-wider text-paper-dim hover:text-accent transition-colors"
+                className={`font-mono text-xs uppercase tracking-wider transition-colors ${
+                  active === link.href ? "text-accent" : "text-paper-dim hover:text-accent"
+                }`}
               >
                 {link.label}
               </a>
@@ -77,7 +100,9 @@ export function Nav() {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="font-mono text-sm uppercase tracking-wider text-paper-dim hover:text-accent transition-colors"
+                  className={`font-mono text-sm uppercase tracking-wider transition-colors ${
+                    active === link.href ? "text-accent" : "text-paper-dim hover:text-accent"
+                  }`}
                 >
                   {link.label}
                 </a>

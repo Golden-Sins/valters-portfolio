@@ -1,25 +1,41 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 import { meta } from "@/lib/content";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+
   return (
     <section
       id="top"
+      ref={sectionRef}
       className="relative min-h-screen flex items-end overflow-hidden bg-ink"
     >
-      <div className="absolute inset-0">
-        <Image
-          src="/images/hero-cliff.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[68%_30%] saturate-[0.8] contrast-[1.05]"
-        />
+      <motion.div className="absolute inset-0" style={{ y: parallaxY }}>
+        <motion.div
+          className="absolute inset-0"
+          initial={{ scale: 1.12 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 12, ease: "easeOut" }}
+        >
+          <Image
+            src="/images/hero-cliff.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[68%_30%] saturate-[0.8] contrast-[1.05]"
+          />
+        </motion.div>
         <div
           className="absolute inset-0"
           style={{
@@ -34,15 +50,24 @@ export function Hero() {
               "linear-gradient(to top, rgba(10,10,13,0.95) 0%, rgba(10,10,13,0.4) 55%, rgba(10,10,13,0.15) 100%)",
           }}
         />
-      </div>
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(700px circle at 8% 82%, rgba(242,184,75,0.14), transparent 60%)",
+          }}
+        />
+      </motion.div>
 
       <div className="relative z-10 mx-auto max-w-6xl w-full px-6 pb-24 pt-40 md:pb-32">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="section-label mb-5"
+          className="section-label mb-5 flex items-center gap-2"
         >
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
           {meta.location} · {meta.remote}
         </motion.p>
 
@@ -81,14 +106,14 @@ export function Hero() {
         >
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 bg-accent text-ink font-mono text-sm uppercase tracking-wider px-6 py-3 hover:bg-accent-dim transition-colors"
+            className="inline-flex items-center gap-2 bg-accent text-ink font-mono text-sm uppercase tracking-wider px-6 py-3 hover:bg-accent-dim hover:-translate-y-0.5 transition-all"
           >
             View Projects
             <ArrowRight size={16} />
           </a>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 border border-hairline-strong text-paper font-mono text-sm uppercase tracking-wider px-6 py-3 hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-2 border border-hairline-strong text-paper font-mono text-sm uppercase tracking-wider px-6 py-3 hover:border-accent hover:text-accent hover:-translate-y-0.5 transition-all"
           >
             Get in Touch
           </a>
@@ -103,6 +128,22 @@ export function Hero() {
           </a>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+        className="hidden md:flex absolute right-8 bottom-10 z-10 flex-col items-center gap-2 text-paper-dim"
+      >
+        <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] [writing-mode:vertical-rl]">
+          Scroll
+        </span>
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="h-6 w-px bg-paper-dim/50"
+        />
+      </motion.div>
     </section>
   );
 }

@@ -1,12 +1,11 @@
 import { certifications, languages } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
+import { SectionIntro } from "@/components/SectionIntro";
 
 export function CertsAndLanguages() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-28">
-      <Reveal>
-        <p className="section-label mb-4">05 · Certifications & Education</p>
-      </Reveal>
+      <SectionIntro index="05" title="Certifications & Education" />
 
       <div className="mt-8 grid md:grid-cols-[1.6fr_1fr] gap-12">
         <Reveal delay={0.05}>
