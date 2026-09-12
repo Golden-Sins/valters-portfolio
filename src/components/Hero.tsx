@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
-import { meta } from "@/lib/content";
+import { meta, stats } from "@/lib/content";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -130,19 +130,21 @@ export function Hero() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="hidden md:flex absolute right-8 bottom-10 z-10 flex-col items-center gap-2 text-paper-dim"
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+        className="hidden lg:block absolute right-10 xl:right-16 top-40 z-10 w-60 hairline bg-ink/70 backdrop-blur-md px-6 py-6 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.6)]"
       >
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] [writing-mode:vertical-rl]">
-          Scroll
-        </span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="h-6 w-px bg-paper-dim/50"
-        />
+        <div className="font-mono text-4xl font-medium text-accent tabular-nums">
+          {stats[0].value}
+          {stats[0].suffix}
+        </div>
+        <div className="mt-2 font-mono text-xs uppercase tracking-wider text-paper-dim leading-relaxed">
+          {stats[0].label}
+        </div>
+        <div className="mt-5 pt-5 border-t border-hairline font-mono text-[0.7rem] text-paper-dim/80">
+          Yggdrasil Gaming · 2024–2025
+        </div>
       </motion.div>
     </section>
   );
