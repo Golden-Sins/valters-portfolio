@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/content";
@@ -18,6 +18,8 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const intersecting = useRef<Record<string, boolean>>({});
+
   useEffect(() => {
     const sections = navLinks
       .map((link) => document.querySelector(link.href))
@@ -26,10 +28,10 @@ export function Nav() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActive(`#${entry.target.id}`);
-          }
+          intersecting.current[`#${entry.target.id}`] = entry.isIntersecting;
         }
+        const current = navLinks.find((link) => intersecting.current[link.href]);
+        setActive(current?.href ?? "");
       },
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
     );

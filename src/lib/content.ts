@@ -32,7 +32,7 @@ export const stats = [
 ] as const;
 
 export const profile = {
-  body: `Integration & QA Engineer with 1+ years of hands-on experience in B2B iGaming platform environments, API integration testing, and automation engineering. At Yggdrasil Gaming — one of the industry's leading game providers — resolved 100+ complex API integration failures monthly across international operator partners, achieving a 30% uplift in customer satisfaction and becoming the most-requested technical engineer company-wide. Built a production-grade automated testing framework with 70+ scenarios, 5 CI/CD workflows, Docker containerisation, and live Datadog observability. Recently built a Model Context Protocol (MCP) server in Node.js/TypeScript exposing the gaming platform API as AI-consumable tools, with an A2A-compliant Agent Card enabling discovery by other agents in multi-agent pipelines — verified via live agentic pipeline with Cursor AI client. Currently completing the IBM AI Engineering Professional Certificate. Open to remote Integration Engineer, QA Automation, API Support, or Technical Account Manager roles.`,
+  body: `Integration & QA Engineer with 1+ years of hands-on experience in B2B iGaming platform environments, API integration testing, and automation engineering. At Yggdrasil Gaming — one of the industry's leading game providers — resolved 100+ complex API integration failures monthly across international operator partners, achieving a 30% uplift in customer satisfaction and becoming the most-requested technical engineer company-wide. Built a production-grade automated testing framework with 70+ scenarios, 5 CI/CD workflows, Docker containerisation, and live Datadog observability. Recently built a Model Context Protocol (MCP) server in Node.js/TypeScript exposing the gaming platform API as AI-consumable tools, with an A2A-compliant Agent Card enabling discovery by other agents in multi-agent pipelines — verified via live agentic pipeline with Cursor AI client. Open to remote Integration Engineer, QA Automation, API Support, or Technical Account Manager roles.`,
 };
 
 export const testimonial = {
@@ -56,6 +56,18 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: "Gaming Platform Mock Server",
+    year: "2026",
+    repo: "github.com/Golden-Sins/gaming-platform-mock-server",
+    url: "https://github.com/Golden-Sins/gaming-platform-mock-server",
+    description:
+      "Express/TypeScript backend providing live REST endpoints consumed by the MCP server.",
+    highlights: [
+      "Routes: auth test results, Datadog metrics summary, transaction status lookup, failure pattern simulation.",
+    ],
+    tags: ["Express", "TypeScript", "REST API"],
+  },
+  {
     name: "Gaming Platform MCP Server",
     year: "2026",
     repo: "github.com/Golden-Sins/gaming-platform-mcp",
@@ -68,18 +80,6 @@ export const projects: Project[] = [
       "Connected to gaming-platform-mock-server Express backend — all 4 tools return live data, not mocks.",
     ],
     tags: ["Node.js", "TypeScript", "MCP", "A2A", "Agentic AI"],
-  },
-  {
-    name: "Gaming Platform Mock Server",
-    year: "2026",
-    repo: "github.com/Golden-Sins/gaming-platform-mock-server",
-    url: "https://github.com/Golden-Sins/gaming-platform-mock-server",
-    description:
-      "Express/TypeScript backend providing live REST endpoints consumed by the MCP server.",
-    highlights: [
-      "Routes: auth test results, Datadog metrics summary, transaction status lookup, failure pattern simulation.",
-    ],
-    tags: ["Express", "TypeScript", "REST API"],
   },
   {
     name: "Gaming Platform API Testing Framework",
@@ -198,7 +198,6 @@ export const skillGroups: SkillGroup[] = [
 
 export const certifications = [
   { name: "Postman API Fundamentals Student Expert", date: "Sep 2025" },
-  { name: "IBM AI Engineering Professional Certificate", date: "In Progress" },
   { name: "ISC² Certified in Cybersecurity", date: "Active" },
   { name: "Agile Testing Methodologies", date: "Active" },
   { name: "Software Testing Foundations", date: "University of Minnesota" },
