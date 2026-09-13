@@ -9,12 +9,11 @@ import { Reveal, RevealGroup, revealItem } from "@/components/Reveal";
 import { SectionIntro } from "@/components/SectionIntro";
 import { motion } from "framer-motion";
 
-type Variant = "default" | "featured" | "wide";
+type Variant = "default" | "featured";
 
 const spanClass: Record<Variant, string> = {
   default: "md:col-span-1",
-  featured: "md:col-span-2 md:row-span-2",
-  wide: "md:col-span-3",
+  featured: "md:col-span-2",
 };
 
 function ProjectCard({ project, variant = "default" }: { project: Project; variant?: Variant }) {
@@ -28,7 +27,6 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
     el.style.setProperty("--y", `${e.clientY - rect.top}px`);
   }
 
-  const isWide = variant === "wide";
   const isFeatured = variant === "featured";
 
   return (
@@ -40,7 +38,11 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
       transition={{ duration: 0.25, ease: "easeOut" }}
       className={`group relative hairline flex overflow-hidden hover:border-accent/50 transition-colors ${
         spanClass[variant]
-      } ${isFeatured ? "bg-ink-raised/30 p-8 md:p-10 flex-col" : isWide ? "bg-ink-raised/20 p-7 md:p-9 flex-col md:flex-row md:items-start gap-6 md:gap-10" : "bg-ink-raised/20 p-7 md:p-8 flex-col"}`}
+      } ${
+        isFeatured
+          ? "bg-ink-raised/30 p-7 md:p-9 flex-col md:flex-row md:items-start gap-6 md:gap-10"
+          : "bg-ink-raised/20 p-7 md:p-8 flex-col"
+      }`}
     >
       <div
         aria-hidden
@@ -51,7 +53,7 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
         }}
       />
 
-      <div className={isWide ? "relative md:w-64 shrink-0" : "relative"}>
+      <div className={isFeatured ? "relative md:w-64 shrink-0" : "relative"}>
         <div className="flex items-start justify-between gap-4">
           <div>
             {isFeatured && (
@@ -64,7 +66,7 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
               <h3
                 className={`mt-2 font-semibold text-paper ${
                   isFeatured
-                    ? "text-[clamp(1.4rem,2.4vw,1.85rem)]"
+                    ? "text-[clamp(1.3rem,2.2vw,1.6rem)]"
                     : "text-[clamp(1.1rem,1.8vw,1.35rem)]"
                 }`}
               >
@@ -83,29 +85,36 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
           </a>
         </div>
 
-        {isWide && (
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 hidden md:inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-paper-dim group-hover:text-accent transition-colors w-fit"
-          >
-            {project.repo}
-            <ArrowUpRight size={13} />
-          </a>
+        {isFeatured && (
+          <div className="mt-4 hidden md:flex flex-col gap-1.5">
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-paper-dim group-hover:text-accent transition-colors w-fit"
+            >
+              {project.repo}
+              <ArrowUpRight size={13} />
+            </a>
+            {project.secondaryUrl && project.secondaryRepo && (
+              <a
+                href={project.secondaryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-paper-dim/70 hover:text-accent transition-colors w-fit"
+              >
+                ↳ {project.secondaryRepo}
+                <ArrowUpRight size={12} />
+              </a>
+            )}
+          </div>
         )}
       </div>
 
       <div className="relative flex flex-col flex-1">
-        <p
-          className={`text-paper/80 leading-relaxed ${
-            isFeatured ? "mt-5 text-base" : "mt-4 text-sm"
-          }`}
-        >
-          {project.description}
-        </p>
+        <p className="mt-4 text-sm text-paper/80 leading-relaxed">{project.description}</p>
 
-        <ul className={isFeatured ? "mt-5 space-y-2.5" : "mt-4 space-y-2"}>
+        <ul className="mt-4 space-y-2">
           {project.highlights.map((h) => (
             <li
               key={h}
@@ -127,7 +136,7 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
           ))}
         </div>
 
-        {!isWide && (
+        {!isFeatured && (
           <a
             href={project.url}
             target="_blank"
@@ -144,7 +153,7 @@ function ProjectCard({ project, variant = "default" }: { project: Project; varia
 }
 
 export function Projects() {
-  const variants: Variant[] = ["featured", "default", "default", "wide"];
+  const variants: Variant[] = ["featured", "default", "default"];
 
   return (
     <section id="projects" className="mx-auto max-w-6xl px-6 py-28">
@@ -155,7 +164,7 @@ export function Projects() {
         </h2>
       </Reveal>
 
-      <RevealGroup className="mt-12 grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 items-stretch">
+      <RevealGroup className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         {projects.map((project, i) => (
           <ProjectCard key={project.name} project={project} variant={variants[i] ?? "default"} />
         ))}

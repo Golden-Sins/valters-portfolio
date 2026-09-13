@@ -52,6 +52,8 @@ export type Project = {
   description: string;
   highlights: string[];
   tags: string[];
+  secondaryRepo?: string;
+  secondaryUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -61,25 +63,15 @@ export const projects: Project[] = [
     repo: "github.com/Golden-Sins/gaming-platform-mock-server",
     url: "https://github.com/Golden-Sins/gaming-platform-mock-server",
     description:
-      "Express/TypeScript backend providing live REST endpoints consumed by the MCP server.",
+      "Express/TypeScript backend providing live REST endpoints — paired with a companion MCP (Model Context Protocol) server that exposes the same API as AI-consumable tools for agentic pipelines.",
     highlights: [
       "Routes: auth test results, Datadog metrics summary, transaction status lookup, failure pattern simulation.",
+      "Companion MCP layer exposes this API as tools — run_auth_tests, check_transaction, get_failure_report, simulate_failure — with an A2A-compliant Agent Card published at /.well-known/agent-card.json for discovery by other agents in multi-agent pipelines.",
+      "Full agentic pipeline verified via Cursor AI client: autonomous tool invocation, live data retrieval, structured reporting — all 4 tools return live data from this backend, not mocks.",
     ],
-    tags: ["Express", "TypeScript", "REST API"],
-  },
-  {
-    name: "Gaming Platform MCP Server",
-    year: "2026",
-    repo: "github.com/Golden-Sins/gaming-platform-mcp",
-    url: "https://github.com/Golden-Sins/gaming-platform-mcp",
-    description:
-      "Built an MCP (Model Context Protocol) server in Node.js/TypeScript exposing the gaming platform API as AI-consumable tools — run_auth_tests, check_transaction, get_failure_report, simulate_failure.",
-    highlights: [
-      "A2A-compliant: Agent Card published at /.well-known/agent-card.json — discoverable by other agents in multi-agent pipelines without manual configuration.",
-      "Full agentic pipeline verified via Cursor AI client: autonomous tool invocation, live data retrieval, structured reporting.",
-      "Connected to gaming-platform-mock-server Express backend — all 4 tools return live data, not mocks.",
-    ],
-    tags: ["Node.js", "TypeScript", "MCP", "A2A", "Agentic AI"],
+    tags: ["Express", "TypeScript", "REST API", "MCP", "A2A", "Agentic AI"],
+    secondaryRepo: "github.com/Golden-Sins/gaming-platform-mcp",
+    secondaryUrl: "https://github.com/Golden-Sins/gaming-platform-mcp",
   },
   {
     name: "Gaming Platform API Testing Framework",
